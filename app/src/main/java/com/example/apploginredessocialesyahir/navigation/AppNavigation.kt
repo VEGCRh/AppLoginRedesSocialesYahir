@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.apploginredessocialesyahir.ui.home.HomeScreen
 import com.example.apploginredessocialesyahir.ui.login.LoginScreen
 import com.example.apploginredessocialesyahir.ui.login.LoginViewModel
+import com.example.apploginredessocialesyahir.ui.splash.SplashScreen
 
 @Composable
 fun AppNavigation() {
@@ -20,7 +21,17 @@ fun AppNavigation() {
     val loginState by loginViewModel.loginState.collectAsState()
     val context = LocalContext.current
     
-    NavHost(navController = navController, startDestination = AppScreens.LoginScreen.route) {
+    NavHost(navController = navController, startDestination = AppScreens.SplashScreen.route) {
+        composable(route = AppScreens.SplashScreen.route) {
+            SplashScreen(
+                onSplashFinished = {
+                    navController.navigate(AppScreens.LoginScreen.route) {
+                        popUpTo(AppScreens.SplashScreen.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+        
         composable(route = AppScreens.LoginScreen.route) {
             LoginScreen(
                 loginState = loginState,
@@ -66,6 +77,7 @@ fun AppNavigation() {
 }
 
 sealed class AppScreens(val route: String) {
+    object SplashScreen : AppScreens("splash_screen")
     object LoginScreen : AppScreens("login_screen")
     object HomeScreen : AppScreens("home_screen")
 }
