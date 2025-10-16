@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "106239648173",
+    "project_id": "apploginredessocialesyahir",
+    "storage_bucket": "apploginredessocialesyahir.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106239648173:android:2eddbdb5ba1a2745b18124",
+        "android_client_info": {
+          "package_name": "com.example.apploginredessocialesyahir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106239648173-8is2c6r695ittifi23rlmhobi6o22l8r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFaVezetTr7M185DwQMzLtu0uazKhW9HU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106239648173-8is2c6r695ittifi23rlmhobi6o22l8r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
