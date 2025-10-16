@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.sp
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun HomeScreen(username: String, onLogout: () -> Unit = {}) {
+fun HomeScreen(username: String, onLogout: () -> Unit = {}, onAboutClick: () -> Unit = {}) {
     val auth = FirebaseAuth.getInstance()
     val currentUser = auth.currentUser
     
@@ -45,6 +45,20 @@ fun HomeScreen(username: String, onLogout: () -> Unit = {}) {
         
         Spacer(modifier = Modifier.height(32.dp))
         
+        // Botón Acerca de
+        Button(
+            onClick = onAboutClick,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2))
+        ) {
+            Text("Acerca de", fontSize = 16.sp, color = Color.White)
+        }
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        // Botón Cerrar Sesión
         Button(
             onClick = {
                 auth.signOut()

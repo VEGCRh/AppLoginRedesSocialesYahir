@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.apploginredessocialesyahir.ui.about.AboutScreen
 import com.example.apploginredessocialesyahir.ui.home.HomeScreen
 import com.example.apploginredessocialesyahir.ui.login.LoginScreen
 import com.example.apploginredessocialesyahir.ui.login.LoginViewModel
@@ -70,6 +71,17 @@ fun AppNavigation() {
                     navController.navigate(AppScreens.LoginScreen.route) {
                         popUpTo(0) { inclusive = true }
                     }
+                },
+                onAboutClick = {
+                    navController.navigate(AppScreens.AboutScreen.route)
+                }
+            )
+        }
+        
+        composable(route = AppScreens.AboutScreen.route) {
+            AboutScreen(
+                onBackClick = {
+                    navController.popBackStack()
                 }
             )
         }
@@ -80,4 +92,5 @@ sealed class AppScreens(val route: String) {
     object SplashScreen : AppScreens("splash_screen")
     object LoginScreen : AppScreens("login_screen")
     object HomeScreen : AppScreens("home_screen")
+    object AboutScreen : AppScreens("about_screen")
 }
