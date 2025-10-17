@@ -1,5 +1,6 @@
 package com.example.apploginredessocialesyahir.ui.about
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -7,33 +8,36 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.apploginredessocialesyahir.R
 
 data class TeamMember(
     val name: String,
-    val role: String = "Integrante"
+    val role: String = "Integrante",
+    val imageRes: Int // ← nuevo campo para la foto
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(onBackClick: () -> Unit) {
     val teamMembers = listOf(
-        TeamMember("Carlos Yahir Cruz Cruz", "Integrante 1"),
-        TeamMember("Josue Lopez Cruz Cruz", "Integrante 2"),
-        TeamMember("Felix Alexis Sanchez Lopez", "Integrante 3"),
-        TeamMember("Jannilet Perez Perez", "Integrante 4")
+        TeamMember("Carlos Yahir Cruz Cruz", "Integrante 1", R.drawable.carlos),
+        TeamMember("Josue Lopez Cruz Cruz", "Integrante 2", R.drawable.josue),
+        TeamMember("Felix Alexis Sanchez Lopez", "Integrante 3", R.drawable.felix),
+        TeamMember("Jannilet Perez Perez", "Integrante 4", R.drawable.jannilet)
     )
-    
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -82,7 +86,7 @@ fun AboutScreen(onBackClick: () -> Unit) {
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
-                    
+
                     InfoRow(label = "ASIGNATURA:", value = "Desarrollo Móvil Integral")
                     Spacer(modifier = Modifier.height(8.dp))
                     InfoRow(label = "DOCENTE:", value = "Armando Méndez Morales")
@@ -90,7 +94,7 @@ fun AboutScreen(onBackClick: () -> Unit) {
                     InfoRow(label = "UNIDAD:", value = "U2. Integración de servicios en la nube")
                 }
             }
-            
+
             // Título del equipo
             Text(
                 text = "Equipo de Desarrollo",
@@ -98,15 +102,15 @@ fun AboutScreen(onBackClick: () -> Unit) {
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            
+
             // Lista de integrantes
             teamMembers.forEach { member ->
                 TeamMemberCard(member = member)
                 Spacer(modifier = Modifier.height(12.dp))
             }
-            
+
             Spacer(modifier = Modifier.height(24.dp))
-            
+
             // Footer
             Text(
                 text = "© 2025 - Proyecto de Desarrollo Móvil",
@@ -150,24 +154,19 @@ fun TeamMemberCard(member: TeamMember) {
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Avatar
-            Box(
+            // Foto del integrante
+            Image(
+                painter = painterResource(id = member.imageRes),
+                contentDescription = "Foto de ${member.name}",
                 modifier = Modifier
                     .size(60.dp)
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.primary),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "Avatar",
-                    modifier = Modifier.size(32.dp),
-                    tint = Color.White
-                )
-            }
-            
+                contentScale = ContentScale.Crop
+            )
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             // Información
             Column {
                 Text(
