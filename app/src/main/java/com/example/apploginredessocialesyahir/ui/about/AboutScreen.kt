@@ -32,10 +32,12 @@ data class TeamMember(
 @Composable
 fun AboutScreen(onBackClick: () -> Unit) {
     val teamMembers = listOf(
+
         TeamMember("Carlos Yahir Cruz Cruz", "Integrante 1", R.drawable.carlos),
         TeamMember("Josue Lopez Cruz Cruz", "Integrante 2", R.drawable.josue),
         TeamMember("Felix Alexis Sanchez Lopez", "Integrante 3", R.drawable.felix),
         TeamMember("Jannilet Perez Perez", "Integrante 4", R.drawable.jannilet)
+
     )
 
     Scaffold(
