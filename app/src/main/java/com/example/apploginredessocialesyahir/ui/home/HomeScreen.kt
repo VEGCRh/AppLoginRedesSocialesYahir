@@ -1,12 +1,15 @@
 package com.example.apploginredessocialesyahir.ui.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -17,59 +20,73 @@ import com.google.firebase.auth.FirebaseAuth
 fun HomeScreen(username: String, onLogout: () -> Unit = {}, onAboutClick: () -> Unit = {}) {
     val auth = FirebaseAuth.getInstance()
     val currentUser = auth.currentUser
-    
-    Column(
+
+    // Fondo con degradado
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(Color(0xFFBBDEFB), Color(0xFF90CAF9))
+                )
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Mensaje de bienvenida
+            Text(
+                text = "¡Bienvenido, ${currentUser?.displayName ?: currentUser?.email ?: "Usuario"}!",
+                fontSize = 26.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF0D47A1)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "Has iniciado sesión correctamente",
+                fontSize = 18.sp,
+                color = Color(0xFF1976D2)
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Menú de botones
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                MenuButton("Acerca de", Color(0xFF1976D2), onClick = onAboutClick)
+                MenuButton("Cerrar Sesión", Color(0xFFE53935), onClick = {
+                    auth.signOut()
+                    onLogout()
+                })
+            }
+        }
+    }
+}
+
+// Composable para botones tipo menú
+@Composable
+fun MenuButton(title: String, color: Color, onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(60.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = color),
+        shape = RoundedCornerShape(16.dp)
     ) {
         Text(
-            text = "¡Bienvenido!",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
-        )
-        
-        Text(
-            text = currentUser?.displayName ?: currentUser?.email ?: "Usuario",
+            text = title,
             fontSize = 18.sp,
-            modifier = Modifier.padding(top = 8.dp)
+            color = Color.White,
+            fontWeight = FontWeight.SemiBold
         )
-        
-        Text(
-            text = "Has iniciado sesión correctamente",
-            fontSize = 16.sp,
-            modifier = Modifier.padding(top = 8.dp)
-        )
-        
-        Spacer(modifier = Modifier.height(32.dp))
-        
-        // Botón Acerca de
-        Button(
-            onClick = onAboutClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1976D2))
-        ) {
-            Text("Acerca de", fontSize = 16.sp, color = Color.White)
-        }
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        // Botón Cerrar Sesión
-        Button(
-            onClick = {
-                auth.signOut()
-                onLogout()
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
-        ) {
-            Text("Cerrar Sesión", fontSize = 16.sp, color = Color.White)
-        }
     }
 }
